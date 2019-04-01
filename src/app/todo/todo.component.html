@@ -9,11 +9,11 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-3">
-      <input type="text" class="form-control" name="task" placeholder="Task" [(ngModel)]="taskIp" />
+      <input type="text" class="form-control" name="task" placeholder="Task" [(ngModel)]="addlist.title" />
     </div>
 
     <div class="col-xs-3">
-      <button class="btn btn-info" [disabled]="!taskIp" (click)="addTask()">Add</button>
+      <button class="btn btn-info" [disabled]="!addlist.title" (click)="addTask()">Add</button>
     </div>
     <div class="col-xs-2">
     </div>
@@ -23,6 +23,7 @@
 
     <div class="col-xs-3">
       <input type="text" class="form-control" name="filter" placeholder="Filter Keyword(s)" [(ngModel)]="searchText" />
+
     </div>
     <!-- <div class="col-xs-2">
       <button class="btn btn-info" [disabled]="!searchText" (click)="filter()">Filter</button>
@@ -44,7 +45,7 @@
           <ng-container *ngIf="(alltask | searchfilter:searchText) as result">
             <tr *ngFor="let task of result ; let idx = index">
 
-
+              <!-- | searchfilter:searchText -->
               <td *ngIf="task.is_canceled; else elseTd">
                 <s>{{ idx + 1 }}. {{task.title}}</s>
               </td>
@@ -64,7 +65,7 @@
               </td>
 
               <td>
-                <button class="btn btn-danger btn-xs" (click)="deleteTask(idx)"> Delete </button>
+                <button class="btn btn-danger btn-xs" (click)="deleteTask(task.id,idx)"> Delete </button>
               </td>
             </tr>
             <tr *ngIf="result?.length === 0">

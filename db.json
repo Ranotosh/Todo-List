@@ -2,12 +2,12 @@
   "tasks": [
     {
       "id": 1,
-      "title": "Go home",
+      "title": "Go home  Safely",
       "is_canceled": false
     },
     {
       "id": 2,
-      "title": "Take a nap",
+      "title": "Take nap",
       "is_canceled": false
     },
     {
@@ -21,18 +21,13 @@
       "is_canceled": false
     },
     {
-      "id": 5,
-      "title": "Wash Dress",
-      "is_canceled": false
-    },
-    {
       "id": 6,
       "title": "Dry Dress",
       "is_canceled": false
     },
     {
       "id": 7,
-      "title": "Go to gym",
+      "title": "Go  gym",
       "is_canceled": false
     },
     {
@@ -46,8 +41,28 @@
       "is_canceled": false
     },
     {
-      "id": 10,
-      "title": "Withdrawl Cash",
+      "id": 11,
+      "title": "Take a slap",
+      "is_canceled": false
+    },
+    {
+      "id": 12,
+      "title": "Pmkvy Learn",
+      "is_canceled": false
+    },
+    {
+      "id": 13,
+      "title": "Scripting in Pmkvy",
+      "is_canceled": false
+    },
+    {
+      "id": 14,
+      "title": "Push up at home",
+      "is_canceled": false
+    },
+    {
+      "id": 15,
+      "title": "Watch Match",
       "is_canceled": false
     }
   ]

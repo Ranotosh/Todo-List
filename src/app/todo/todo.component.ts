@@ -20,19 +20,25 @@ export class TodoComponent implements OnInit {
 
   searchText;
 
-  filteredPosts = [];
 
-  originalPosts = [];
-
-  filtered_tasks: any = this.alltask;
+  public addlist:any={
+     id:'',title:'',is_canceled:false
+  };
+  
 
   classesToapply = new Array<boolean>();
   addTask() {
+    this._todoService.addTask(this.addlist)
+    .subscribe(data => {this.addlist=data,  console.log(this.addlist) }
+
+
+    );
 
     this.alltask.push(
 
       {
-        title: this.taskIp,
+        id:this.addlist.id,
+        title: this.addlist.title,
         is_canceled: false
       }
     );
@@ -53,47 +59,40 @@ export class TodoComponent implements OnInit {
 
   }
 
-  deleteTask(idx: number) {
+  deleteTask(id: number,index) {
     let do_delete = confirm("Are you sure to delete the task?");
+
     if (do_delete) {
-      this.alltask.splice(idx, 1);
+      this._todoService.deleteTask(id)
+      .subscribe(data => console.log(data))
+      this.alltask.splice(index, 1);;
     }
   }
 
   editTask(idx: number) {
     let title = this.alltask[idx].title;
     let result = prompt("Edit Task Title", title);
+    this.alltask[idx].title=result;
+    console.log(result);
     if (result !== null && result !== "") {
-      this.alltask[idx].title = result;
+      this._todoService.updateTask(this.alltask[idx])
+      .subscribe(() =>{this.alltask[idx].title=result,console.log(result)})
+      
     }
 
   }
 
 
-  filter() {
-    // this.filteredPosts = this.alltask.filter(task => task.id === -1);
-    // console.log(this.filteredPosts)
-    // if(!this.alltask || !this.searchText){
-
-    //   // console.log(tasks);
-
-    //   return this.alltask;
-
-    // }
-
-    // else{
-    //   console.log(this.alltask);
-
-    //   return this.alltask.filter(task=>task.title.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1);
-
-    // }
-
-  }
-
 
 
   clearToDo(index) {
-    this.alltask.splice(index)
+    let do_deleteAll = confirm("Are you sure to delete all tasks?");
+    if (do_deleteAll) {
+      this._todoService.deleteAllTask(this.alltask)
+      .subscribe(data => console.log(data))
+      this.alltask.splice(index);
+    }
+
 
   }
 

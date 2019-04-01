@@ -14,6 +14,9 @@ export class TodoService{
    getTasks(){
         return this._httpclient.get<any>("http://localhost:4002/tasks");
     }
+    getTaskId(id) {
+        return this._httpclient.get<any>("http://localhost:4002/tasks/" + id);
+    }
 
     addTask(task:ITask){
     
@@ -26,8 +29,8 @@ export class TodoService{
 
     }
     updateTask(task){
-    //    console.log(employee);
-        return this._httpclient.put<any>("http://localhost:4002/tasks/",task,{
+    //    console.log(task);
+        return this._httpclient.put<any>("http://localhost:4002/tasks/"+ task.id,task,{
             headers:new HttpHeaders({
                 'Content-type':'application/json'
             })
@@ -35,5 +38,8 @@ export class TodoService{
     }
     deleteTask(id:number){
         return this._httpclient.delete<any>("http://localhost:4002/tasks/"+id);
+    }
+    deleteAllTask(task){
+        return this._httpclient.delete<any>("http://localhost:4002/tasks/",task);
     }
 }
