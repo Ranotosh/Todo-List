@@ -12,15 +12,15 @@ export class TodoService{
     constructor(private _httpclient:HttpClient){}
 
    getTasks(){
-        return this._httpclient.get<any>("http://localhost:4002/tasks");
+        return this._httpclient.get<any>("http://localhost:3000/tasks");
     }
     getTaskId(id) {
-        return this._httpclient.get<any>("http://localhost:4002/tasks/" + id);
+        return this._httpclient.get<any>("http://localhost:3000/tasks/" + id);
     }
 
     addTask(task:ITask){
     
-        return this._httpclient.post<any>("http://localhost:4002/tasks/",task,{
+        return this._httpclient.post<any>("http://localhost:3000/tasks/",task,{
             headers:new HttpHeaders({
                 'Content-type':'application/json'
             })
@@ -30,16 +30,16 @@ export class TodoService{
     }
     updateTask(task){
     //    console.log(task);
-        return this._httpclient.put<any>("http://localhost:4002/tasks/"+ task.id,task,{
+        return this._httpclient.put<any>("http://localhost:3000/tasks/"+ task.id,task,{
             headers:new HttpHeaders({
                 'Content-type':'application/json'
             })
         });
     }
     deleteTask(id:number){
-        return this._httpclient.delete<any>("http://localhost:4002/tasks/"+id);
+        return this._httpclient.delete<any>("http://localhost:3000/tasks/"+id);
     }
-    deleteAllTask(task){
-        return this._httpclient.delete<any>("http://localhost:4002/tasks/",task);
+    deleteAllTask(allid){
+        return this._httpclient.delete<any>("http://localhost:3000/tasks/",allid);
     }
 }

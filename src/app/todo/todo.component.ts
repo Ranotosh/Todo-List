@@ -20,6 +20,7 @@ export class TodoComponent implements OnInit {
 
   searchText;
 
+  allids=[];
 
   public addlist:any={
      id:'',title:'',is_canceled:false
@@ -42,6 +43,7 @@ export class TodoComponent implements OnInit {
         is_canceled: false
       }
     );
+    this.addlist.title='';
 
   }
 
@@ -85,12 +87,18 @@ export class TodoComponent implements OnInit {
 
 
 
-  clearToDo(index) {
+  clearToDo(task,index) {
+    
+    task=this.alltask;
+    for(var i=0;i<task.length;i++){
+      this.allids.push(task[i].id);
+    }
+    console.log(this.allids);
     let do_deleteAll = confirm("Are you sure to delete all tasks?");
     if (do_deleteAll) {
-      this._todoService.deleteAllTask(this.alltask)
+      this._todoService.deleteAllTask(this.allids)
       .subscribe(data => console.log(data))
-      this.alltask.splice(index);
+      this.alltask.splice(0);;
     }
 
 

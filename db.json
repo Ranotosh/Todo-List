@@ -1,29 +1,9 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "title": "Go home  Safely",
-      "is_canceled": false
-    },
-    {
-      "id": 2,
-      "title": "Take nap",
-      "is_canceled": false
-    },
-    {
       "id": 3,
-      "title": "Start learning Feebased Scheme",
-      "is_canceled": false
-    },
-    {
-      "id": 4,
-      "title": "Prepare Food",
-      "is_canceled": false
-    },
-    {
-      "id": 6,
-      "title": "Dry Dress",
-      "is_canceled": false
+      "title": "Start learning Feebased ",
+      "is_canceled": true
     },
     {
       "id": 7,
@@ -56,13 +36,33 @@
       "is_canceled": false
     },
     {
-      "id": 14,
-      "title": "Push up at home",
+      "id": 15,
+      "title": "Watch Match",
       "is_canceled": false
     },
     {
-      "id": 15,
-      "title": "Watch Match",
+      "id": 16,
+      "title": "Go home safely",
+      "is_canceled": false
+    },
+    {
+      "id": 30,
+      "title": "Guardian name problem",
+      "is_canceled": false
+    },
+    {
+      "id": 32,
+      "title": "Select All in IA",
+      "is_canceled": false
+    },
+    {
+      "id": 33,
+      "title": "Data is not resetting",
+      "is_canceled": false
+    },
+    {
+      "id": 34,
+      "title": "Alignment of buttons",
       "is_canceled": false
     }
   ]
