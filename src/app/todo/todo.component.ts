@@ -13,73 +13,55 @@ interface Task {
 })
 export class TodoComponent implements OnInit {
 
-
-  public alltask;
-
-  public taskIp;
+  public myList = [];
 
   searchText;
 
-  allids=[];
-
-  public addlist:any={
-     id:'',title:'',is_canceled:false
+  public addlist: any = {
+    title: '', active: true, status: false, iscompleted: false
   };
-  
 
-  classesToapply = new Array<boolean>();
   addTask() {
     this._todoService.addTask(this.addlist)
-    .subscribe(data => {this.addlist=data,  console.log(this.addlist) }
+      .subscribe(data => {
+        this.addlist = data, this.getAllTask()
+      });
 
-
-    );
-
-    this.alltask.push(
-
-      {
-        id:this.addlist.id,
-        title: this.addlist.title,
-        is_canceled: false
-      }
-    );
-    this.addlist.title='';
+    this.addlist.title = '';
 
   }
 
-  cancelTask(idx: number) {
-    if (this.alltask[idx].is_canceled) {
-      this.alltask[idx].is_canceled = false;
-      this.classesToapply[idx] = false;
-      console.log(this.classesToapply[idx]);
-
-    } else {
-      this.alltask[idx].is_canceled = true;
-      this.classesToapply[idx] = true;
-      console.log(this.classesToapply[idx]);
+  cancelTask(task) {
+    console.log(task)
+    let do_complete = task.iscompleted  != true?confirm("Are you sure the task is completed?"):confirm("Are you sure the task is not completed yet?");
+    if (do_complete) {
+      var iscomplete = { "isCompleted": !task.iscompleted, "type": "Completed" };
+      this._todoService.updateTask(task.id, iscomplete)
+        .subscribe(data => { console.log(data), this.getAllTask() })
     }
-
   }
 
-  deleteTask(id: number,index) {
+  deleteTask(task) {
     let do_delete = confirm("Are you sure to delete the task?");
 
     if (do_delete) {
-      this._todoService.deleteTask(id)
-      .subscribe(data => console.log(data))
-      this.alltask.splice(index, 1);;
+      var isActive = { "active": false, "id": task.id }
+      this._todoService.deleteTask(isActive)
+        .subscribe(data => { console.log(data), this.getAllTask() }
+        )
     }
   }
 
-  editTask(idx: number) {
-    let title = this.alltask[idx].title;
+  editTask(task) {
+    let title = task.title;
     let result = prompt("Edit Task Title", title);
-    this.alltask[idx].title=result;
     console.log(result);
     if (result !== null && result !== "") {
-      this._todoService.updateTask(this.alltask[idx])
-      .subscribe(() =>{this.alltask[idx].title=result,console.log(result)})
-      
+      var updatedTask = { "title": result, "type": "Title" };
+      this._todoService.updateTask(task.id, updatedTask)
+        .subscribe(() => {
+          console.log(result), this.getAllTask()
+        })
     }
 
   }
@@ -87,30 +69,40 @@ export class TodoComponent implements OnInit {
 
 
 
-  clearToDo(task,index) {
-    
-    task=this.alltask;
-    for(var i=0;i<task.length;i++){
-      this.allids.push(task[i].id);
-    }
-    console.log(this.allids);
-    let do_deleteAll = confirm("Are you sure to delete all tasks?");
-    if (do_deleteAll) {
-      this._todoService.deleteAllTask(this.allids)
-      .subscribe(data => console.log(data))
-      this.alltask.splice(0);;
-    }
+  // clearToDo(task, index) {
+
+  //   task = this.alltask;
+  //   for (var i = 0; i < task.length; i++) {
+  //     this.allids.push(task[i].id);
+  //   }
+  //   console.log(this.allids);
+  //   let do_deleteAll = confirm("Are you sure to delete all tasks?");
+  //   if (do_deleteAll) {
+  //     this._todoService.deleteAllTask(this.allids)
+  //       .subscribe(data => console.log(data))
+  //     this.alltask.splice(0);;
+  //   }
 
 
+  // }
+
+  getAllTask() {
+    this.myList = []
+    this._todoService.getAllTasks()
+      .subscribe(data => {
+        for (let i = 0; i < data.body.data.length; i++) {
+          if (data.body.data[i].active == true) {
+            this.myList.push(data.body.data[i])
+          }
+        }
+        console.log("newList", this.myList)
+      })
   }
 
   constructor(private _todoService: TodoService) { }
 
   ngOnInit() {
-    this._todoService.getTasks()
-      .subscribe(data => { this.alltask = data, console.log(this.alltask) }
-
-      );
+    this.getAllTask();
   }
 
 }

@@ -42,11 +42,11 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="(alltask | searchfilter:searchText) as result">
+          <ng-container *ngIf="(myList | searchfilter:searchText) as result">
             <tr *ngFor="let task of result ; let idx = index">
 
               <!-- | searchfilter:searchText -->
-              <td *ngIf="task.is_canceled; else elseTd">
+              <td *ngIf="task.iscompleted; else elseTd">
                 <s>{{ idx + 1 }}. {{task.title}}</s>
               </td>
 
@@ -56,16 +56,23 @@
 
 
               <td>
-                <button class="btn btn-primary btn-xs" (click)="editTask(idx)"> Edit </button>
+                <button class="btn btn-primary btn-xs" (click)="editTask(task)"> Edit </button>
+              </td>
+
+              <!-- <td>
+                <button class="btn btn-warning btn-xs" [class.colorclass]="task.iscompleted == true"
+                  (click)="cancelTask(task)"> Completed </button>
+              </td> -->
+
+              <td *ngIf="!task.iscompleted">
+                <button class="btn btn-warning btn-xs" (click)="cancelTask(task)"> Pending </button>
+              </td>
+              <td *ngIf="task.iscompleted">
+                <button class="btn btn-success btn-xs" (click)="cancelTask(task)"> Completed </button>
               </td>
 
               <td>
-                <button class="btn btn-warning btn-xs" [class.colorclass]="classesToapply[idx]"
-                  (click)="cancelTask(idx)"> Completed </button>
-              </td>
-
-              <td>
-                <button class="btn btn-danger btn-xs" (click)="deleteTask(task.id,idx)"> Delete </button>
+                <button class="btn btn-danger btn-xs" (click)="deleteTask(task)"> Delete </button>
               </td>
             </tr>
             <tr *ngIf="result?.length === 0">
@@ -76,7 +83,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <button class="btn btn-danger" style="margin-top:20px" (click)="clearToDo()">Clear</button>
+            <button class="btn btn-danger" style="margin-top:20px" (click)="clearToDo()">Clear All</button>
           </tr>
         </tfoot>
       </table>
